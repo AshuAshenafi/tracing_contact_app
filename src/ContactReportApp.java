@@ -1,4 +1,6 @@
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -7,6 +9,7 @@ import java.util.Scanner;
 public class ContactReportApp {
     // arraylist for all patients
     static ArrayList<Patient> allPatients = new ArrayList<>();
+    static ArrayList<Patient> potentialDangerPlaces = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -84,9 +87,15 @@ public class ContactReportApp {
             if (userInput.equalsIgnoreCase("y")) {
                 String symptom = symptomList[i];
 
-                System.out.println("How long has " + patientName + " had this symptom for? ");
-                int numberOfDays = keybd.nextInt();
-                keybd.nextLine();
+                System.out.println("How many days " + patientName + " had this symptom for? ");
+                String numberOfDays = keybd.nextLine();
+                // if user enters integer value only append the string "days"
+                String temp = numberOfDays.toLowerCase();
+
+                if (!numberOfDays.contains("day")) {
+                    temp += " days";
+                    numberOfDays = temp;
+                }
 
                 System.out.println("Please enter here if you have any additional Description? ");
                 String description = keybd.nextLine();
@@ -128,7 +137,7 @@ public class ContactReportApp {
                 // address of contacted person
                 System.out.println("Enter House Number: ");
                 contactedHouseNumber = keybd.nextLine();
-                //                keybd.nextLine();
+
 
                 System.out.println("What Street Name does she/he live? ");
                 contactedStreetName = keybd.nextLine();
@@ -207,6 +216,25 @@ public class ContactReportApp {
         printPatientReport();
 
 
+        // prompt user if needs to search for a location which patients visisted
+        boolean cont = true;
+        while (cont) {
+
+            System.out.println("would you like to search for specific location\nwhere patients visited recently? (y/n)");
+            String userInput3 = keybd.nextLine();
+
+            if (userInput3.equalsIgnoreCase("y")) {
+                ///// to search a specific location
+                System.out.println("Enter a specific location to search: ");
+                String input = keybd.nextLine();
+
+                search(input);
+            } else {
+                cont = false;
+            }
+        }
+
+
     }   // end of main() method
 
     /////////////////////////////////////////////////////////////////////// phone validation method//////////////////////////////////////////////////
@@ -226,7 +254,7 @@ public class ContactReportApp {
             // symptoms
             System.out.println("\n**\t\tSymptoms: ");
             for (int j = 0; j < allPatients.get(i).getSymptoms().size(); j++) {
-                System.out.println("\t\thad " + allPatients.get(i).getSymptoms().get(j).getSymptomName() + " for " + allPatients.get(i).getSymptoms().get(j).getNumberOfDays() + " days");
+                System.out.println("\t\thad " + allPatients.get(i).getSymptoms().get(j).getSymptomName() + " for " + allPatients.get(i).getSymptoms().get(j).getNumberOfDays());
             }   // end of sympton for loop
 
             // people who have contact with patient
@@ -249,5 +277,24 @@ public class ContactReportApp {
                         "\t\tCity: " + allPatients.get(i).getVisitedPlaces().get(j).getCityOfContact() + "\t\tState: " + allPatients.get(i).getVisitedPlaces().get(j).getStateOfContact() + "\t\tVisit Date: " + allPatients.get(i).getVisitedPlaces().get(j).getDateOfContact() + "\n");
             }
         }
+    }   // end of printPatientReport() method
+
+    public static void search(String str) {
+        for (int i = 0; i < allPatients.size(); i++) {
+
+            for (int j = 0; j < allPatients.get(i).getVisitedPlaces().size(); j++) {
+                if (allPatients.get(i).getVisitedPlaces().get(j).getNameOfPlaceVisited().contains("str")) {
+                    potentialDangerPlaces.add(allPatients.get(i));
+                }
+            }
+        }
+        for (int i = 0; i < potentialDangerPlaces.size(); i++) {
+            String name = potentialDangerPlaces.get(i).getFullName();
+            String phone = potentialDangerPlaces.get(i).getPhoneNumber();
+            String email = potentialDangerPlaces.get(i).getEmail();
+            System.out.println("Your search result for \"" + str + "\" is:\n");
+            System.out.println("Name: " + name + "\t\tTelephone No.: " + phone + "\t\temail: " + email + "\n");
+        }
     }
+
 }   // end of App() class

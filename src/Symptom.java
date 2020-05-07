@@ -1,13 +1,13 @@
 public class Symptom {
     private String symptomName;
-    private int numberOfDays;
+    private String numberOfDays;
     private String description;
 
     public Symptom() {
     }
 
 
-    public Symptom(String symptomName, int numberOfDays, String description) {
+    public Symptom(String symptomName, String numberOfDays, String description) {
         this.symptomName = symptomName;
         this.numberOfDays = numberOfDays;
         this.description = description;
@@ -21,11 +21,11 @@ public class Symptom {
         this.symptomName = symptomName;
     }
 
-    public int getNumberOfDays() {
+    public String getNumberOfDays() {
         return numberOfDays;
     }
 
-    public void setNumberOfDays(int numberOfDays) {
+    public void setNumberOfDays(String numberOfDays) {
         this.numberOfDays = numberOfDays;
     }
 

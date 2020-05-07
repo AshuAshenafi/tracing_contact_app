@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 public class Patient extends Person {
+    public Patient() {
+    }
 
     private ArrayList<Symptom> symptoms;
     private ArrayList<ContactedPerson> contactedPerson;
