@@ -110,6 +110,7 @@ public class ContactReportApp {
         boolean hasMoreContactedPerson = true;
 
         while (hasMoreContactedPerson) {
+            Person personForPhoneVal = new Person();
 
             System.out.println("\nHas " + patientName + " met or run into anyone? (y/n) ");
             String userInput1 = keybd.nextLine();
@@ -120,13 +121,14 @@ public class ContactReportApp {
                 System.out.println("What is his/her name? ");
                 contactedName = keybd.nextLine();
 
-                //        boolean validPhonenumber = true;                                  // validate phone
-                //        while(validPhonenumber){                                          // validate phone
-                System.out.println("What is his/her phone number? ");
-                //        } // phone validation while loop                                  // validate phone
-                contactedPhone = keybd.nextLine();
-
-
+                        boolean cont1 = true;                                  // validate phone
+                        while(cont1) {                                          // validate phone
+                            System.out.println("What is his/her phone number? \nFormat has to be (xxx)xxx-xxxx");
+                            //        } // phone validation while loop                                  // validate phone
+                            contactedPhone = keybd.nextLine();
+                            personForPhoneVal.setPhoneNumber(contactedPhone);
+                            cont1 = personForPhoneVal.isPhoneNumberValid(contactedPhone);
+                        }
                 //        boolean validEmail = true;                                  // validate email
                 //        while(validEmail){                                          // validate email
                 System.out.println("What is his/her email? ");
